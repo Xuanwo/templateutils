@@ -1,22 +1,38 @@
 package templateutils
 
 import (
-	"fmt"
-	"reflect"
 	"regexp"
+	"strings"
 )
 
-// ZeroValue will return input data's default zero value.
-func ZeroValue(in interface{}) string {
-	typ := reflect.TypeOf(in)
-	switch typ.Kind() {
-	case reflect.Array, reflect.Chan, reflect.Func, reflect.Interface, reflect.Slice:
-		return "nil"
-	case reflect.Map, reflect.Struct:
-		r := regexp.MustCompile(`<(.*) Value>`)
-		v := r.FindStringSubmatch(fmt.Sprintf("%v", reflect.Zero(typ).String()))
-		return v[1] + "{}"
-	default:
-		return fmt.Sprintf("%v", reflect.Zero(typ))
+var (
+	intTypeRegex     = regexp.MustCompile(`^[u]?int`)
+	floatTypeRegex   = regexp.MustCompile(`^float`)
+	complexTypeRegex = regexp.MustCompile(`^complex`)
+)
+
+// ZeroValue will return input type name's default zero value.
+func ZeroValue(in string) string {
+	switch in {
+	case "bool":
+		return "false"
+	case "string":
+		return `""`
 	}
+	// Handle all integer, float and complex via return 0.
+	if intTypeRegex.MatchString(in) || floatTypeRegex.MatchString(in) || complexTypeRegex.MatchString(in) {
+		return "0"
+	}
+
+	// If type starts with a "*", it must be a pointer, return nil directly.
+	if strings.HasPrefix(in, "*") {
+		return "nil"
+	}
+
+	// If type starts with "[]", it must a slice, return nil directly.
+	if strings.HasPrefix(in, "[]") {
+		return "nil"
+	}
+
+	return in + "{}"
 }
