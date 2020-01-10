@@ -9,7 +9,7 @@ import (
 
 var funcMap = map[string]interface{}{
 	"camelCase": xstrings.ToCamelCase,
-	"snackCase": xstrings.ToSnakeCase,
+	"snakeCase": xstrings.ToSnakeCase,
 	"lowerCase": strings.ToLower,
 	"zeroValue": ZeroValue,
 }
