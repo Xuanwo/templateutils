@@ -3,14 +3,15 @@ package templateutils
 import (
 	"strings"
 	"text/template"
-
-	"github.com/huandu/xstrings"
 )
 
 var funcMap = map[string]interface{}{
-	"camelCase": xstrings.ToCamelCase,
-	"snakeCase": xstrings.ToSnakeCase,
-	"lowerCase": strings.ToLower,
+	"toCamel":   ToCamel,
+	"toKebab":   ToKebab,
+	"toLower":   strings.ToLower,
+	"toPascal":  ToPascal,
+	"toSnake":   ToSnack,
+	"toUpper":   strings.ToUpper,
 	"zeroValue": ZeroValue,
 }
 
