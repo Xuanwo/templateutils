@@ -6,6 +6,7 @@ import (
 )
 
 var funcMap = map[string]interface{}{
+	// String
 	"toCamel":   ToCamel,
 	"toKebab":   ToKebab,
 	"toLower":   strings.ToLower,
@@ -13,6 +14,9 @@ var funcMap = map[string]interface{}{
 	"toSnake":   ToSnack,
 	"toUpper":   strings.ToUpper,
 	"zeroValue": ZeroValue,
+
+	// Utils
+	"in": In,
 }
 
 // FuncMap will return the template utils as FuncMap.
