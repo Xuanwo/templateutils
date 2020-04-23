@@ -7,12 +7,16 @@ import (
 
 var funcMap = map[string]interface{}{
 	// String
-	"toCamel":   ToCamel,
-	"toKebab":   ToKebab,
-	"toLower":   strings.ToLower,
-	"toPascal":  ToPascal,
-	"toSnake":   ToSnack,
-	"toUpper":   strings.ToUpper,
+	"hasPrefix": strings.HasPrefix,
+	"hasSuffix": strings.HasSuffix,
+
+	"toCamel":  ToCamel,
+	"toKebab":  ToKebab,
+	"toLower":  strings.ToLower,
+	"toPascal": ToPascal,
+	"toSnake":  ToSnack,
+	"toUpper":  strings.ToUpper,
+
 	"zeroValue": ZeroValue,
 
 	// Utils

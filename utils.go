@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Equal will check whether two value is equal.
 func Equal(a, b reflect.Value) bool {
 	aType := reflect.TypeOf(a)
 	if aType == nil {
@@ -20,6 +21,7 @@ func Equal(a, b reflect.Value) bool {
 	return false
 }
 
+// In will check whether value is in item
 func In(item reflect.Value, value reflect.Value) (bool, error) {
 	// indirect item
 	item = indirectInterface(item)
