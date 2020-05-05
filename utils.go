@@ -74,3 +74,8 @@ func In(item reflect.Value, value reflect.Value) (bool, error) {
 		return false, fmt.Errorf("can't check item of type %s", item.Type())
 	}
 }
+
+// MakeSlice will create a new slice via input values.
+func MakeSlice(item ...interface{}) []interface{} {
+	return item
+}

@@ -20,7 +20,8 @@ var funcMap = map[string]interface{}{
 	"zeroValue": ZeroValue,
 
 	// Utils
-	"in": In,
+	"in":        In,
+	"makeSlice": MakeSlice,
 }
 
 // FuncMap will return the template utils as FuncMap.
