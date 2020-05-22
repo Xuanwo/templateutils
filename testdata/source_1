@@ -1,0 +1,57 @@
+package storage
+
+import (
+	"context"
+	"io"
+
+	"github.com/Xuanwo/storage/types"
+	"github.com/Xuanwo/storage/types/info"
+)
+
+type StoragerFunc func(Storager)
+
+type Storager interface {
+	String() string
+
+	Metadata(pairs ...*types.Pair) (m info.StorageMeta, err error)
+	MetadataWithContext(ctx context.Context, pairs ...*types.Pair) (m info.StorageMeta, err error)
+
+	Read(path string, pairs ...*types.Pair) (r io.ReadCloser, err error)
+	ReadWithContext(ctx context.Context, path string, pairs ...*types.Pair) (r io.ReadCloser, err error)
+	Write(path string, r io.Reader, pairs ...*types.Pair) (err error)
+	WriteWithContext(ctx context.Context, path string, r io.Reader, pairs ...*types.Pair) (err error)
+	Stat(path string, pairs ...*types.Pair) (o *types.Object, err error)
+	StatWithContext(ctx context.Context, path string, pairs ...*types.Pair) (o *types.Object, err error)
+	Delete(path string, pairs ...*types.Pair) (err error)
+	DeleteWithContext(ctx context.Context, path string, pairs ...*types.Pair) (err error)
+}
+
+type DirLister interface {
+	ListDir(path string, pairs ...*types.Pair) (err error)
+	ListDirWithContext(ctx context.Context, path string, pairs ...*types.Pair) (err error)
+}
+
+type PrefixLister interface {
+	ListPrefix(prefix string, pairs ...*types.Pair) (err error)
+	ListPrefixWithContext(ctx context.Context, prefix string, pairs ...*types.Pair) (err error)
+}
+
+type Copier interface {
+	Copy(src, dst string, pairs ...*types.Pair) (err error)
+	CopyWithContext(ctx context.Context, src, dst string, pairs ...*types.Pair) (err error)
+}
+
+type Mover interface {
+	Move(src, dst string, pairs ...*types.Pair) (err error)
+	MoveWithContext(ctx context.Context, src, dst string, pairs ...*types.Pair) (err error)
+}
+
+type Reacher interface {
+	Reach(path string, pairs ...*types.Pair) (url string, err error)
+	ReachWithContext(ctx context.Context, path string, pairs ...*types.Pair) (url string, err error)
+}
+
+type Statistician interface {
+	Statistical(pairs ...*types.Pair) (info.StorageStatistic, error)
+	StatisticalWithContext(ctx context.Context, pairs ...*types.Pair) (info.StorageStatistic, error)
+}
