@@ -156,9 +156,11 @@ func (m *Method) parseFuncDecl(f *ast.FuncDecl) error {
 	if err != nil {
 		return err
 	}
-	err = m.Recv.parseFieldList(f.Recv)
-	if err != nil {
-		return err
+	if f.Recv != nil {
+		err = m.Recv.parseFieldList(f.Recv)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
