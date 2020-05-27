@@ -9,11 +9,13 @@ import (
 	"strings"
 )
 
+// Source represent all content in the file.
 type Source struct {
 	Interfaces []*Interface
 	Methods    []*Method
 }
 
+// ParseContent will parse content.
 func (s *Source) ParseContent(filename string, content []byte) error {
 	f, err := parser.ParseFile(token.NewFileSet(), filename, string(content), 0)
 	if err != nil {
@@ -94,6 +96,7 @@ func (s *Source) parseFuncDecl(f *ast.FuncDecl) error {
 	return nil
 }
 
+// Interface represent an interface.
 type Interface struct {
 	Name   string
 	Method []*Method
@@ -123,6 +126,7 @@ func (i *Interface) parseInterfaceType(in *ast.InterfaceType) error {
 	return nil
 }
 
+// Method represent a method.
 type Method struct {
 	Name    string
 	Recv    *Recv
@@ -165,6 +169,7 @@ func (m *Method) parseFuncDecl(f *ast.FuncDecl) error {
 	return nil
 }
 
+// Recv represent a receiver
 type Recv struct {
 	Name string
 	Type string
@@ -186,6 +191,7 @@ func (r *Recv) parseFieldList(f *ast.FieldList) error {
 	return nil
 }
 
+// FieldList is a list for Field.
 type FieldList []*Field
 
 func (f FieldList) String() string {
@@ -209,6 +215,7 @@ func (f *FieldList) parseFields(list *ast.FieldList) error {
 	return nil
 }
 
+// Field represent a field.
 type Field struct {
 	Names []string
 	Type  string
