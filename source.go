@@ -248,6 +248,8 @@ func formatExpr(t ast.Expr) string {
 		return "*" + formatExpr(v.X)
 	case *ast.Ellipsis:
 		return "..." + formatExpr(v.Elt)
+	case *ast.ArrayType:
+		return "[]" + formatExpr(v.Elt)
 	default:
 		log.Fatalf("not handled type %+#v", v)
 		return ""
