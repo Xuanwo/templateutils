@@ -19,6 +19,12 @@ var funcMap = map[string]interface{}{
 
 	"zeroValue": ZeroValue,
 
+	// Case
+	"toInt64": ToInt64,
+
+	// Math
+	"add": Add,
+
 	// Utils
 	"in":        In,
 	"makeSlice": MakeSlice,
