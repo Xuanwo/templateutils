@@ -138,16 +138,19 @@ func (m *Method) parseFuncType(f *ast.FuncType) error {
 	m.Params = make(FieldList, 0)
 	m.Results = make(FieldList, 0)
 
-	err := m.Params.parseFields(f.Params)
-	if err != nil {
-		return err
+	if f.Params != nil {
+		err := m.Params.parseFields(f.Params)
+		if err != nil {
+			return err
+		}
 	}
 
-	err = m.Results.parseFields(f.Results)
-	if err != nil {
-		return err
+	if f.Results != nil {
+		err := m.Results.parseFields(f.Results)
+		if err != nil {
+			return err
+		}
 	}
-
 	return nil
 }
 
