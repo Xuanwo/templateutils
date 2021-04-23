@@ -6,6 +6,7 @@ import (
 	"go/parser"
 	"go/token"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -13,13 +14,27 @@ import (
 type Source struct {
 	Interfaces []*Interface
 	Methods    []*Method
+
+	r    *os.File
+	fset *token.FileSet
 }
 
 // ParseContent will parse content.
-func (s *Source) ParseContent(filename string, content []byte) error {
-	f, err := parser.ParseFile(token.NewFileSet(), filename, string(content), 0)
+func ParseContent(filename string, content []byte) (s *Source, err error) {
+	s = &Source{
+		fset: token.NewFileSet(),
+	}
+
+	r, err := os.Open(filename)
 	if err != nil {
-		return fmt.Errorf("parse file: %w", err)
+		return nil, fmt.Errorf("open file: %w", err)
+	}
+	// Keep open file in source so that we can get every code block content.
+	s.r = r
+
+	f, err := parser.ParseFile(s.fset, filename, string(content), parser.ParseComments)
+	if err != nil {
+		return nil, fmt.Errorf("parse file: %w", err)
 	}
 
 	for _, decl := range f.Decls {
@@ -27,12 +42,12 @@ func (s *Source) ParseContent(filename string, content []byte) error {
 		case *ast.GenDecl:
 			err = s.parseGenDecl(v)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		case *ast.FuncDecl:
 			err = s.parseFuncDecl(v)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		default:
 			// Ignore unsupported decl.
@@ -40,7 +55,7 @@ func (s *Source) ParseContent(filename string, content []byte) error {
 		}
 	}
 
-	return nil
+	return s, nil
 }
 
 func (s *Source) parseGenDecl(g *ast.GenDecl) (err error) {
@@ -60,6 +75,7 @@ func (s *Source) parseGenDecl(g *ast.GenDecl) (err error) {
 	}
 	return nil
 }
+
 func (s *Source) parseTypeSpec(t *ast.TypeSpec) error {
 	// Only support interface type for now.
 	switch v := t.Type.(type) {

@@ -15,8 +15,7 @@ func TestSource_ParseContent(t *testing.T) {
 			t.Errorf("read file: %v", err)
 		}
 
-		s := &Source{}
-		err = s.ParseContent(filename, content)
+		s, err := ParseContent(filename, content)
 		if err != nil {
 			t.Errorf("parse content: %v", err)
 		}
@@ -31,8 +30,7 @@ func TestSource_ParseContent(t *testing.T) {
 			t.Errorf("read file: %v", err)
 		}
 
-		s := Source{}
-		err = s.ParseContent(filename, content)
+		s, err := ParseContent(filename, content)
 		if err != nil {
 			t.Errorf("parse content: %v", err)
 		}
