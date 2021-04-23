@@ -18,7 +18,10 @@ func ZeroValue(in string) string {
 		return "false"
 	case "string":
 		return `""`
+	case "interface{}":
+		return "nil"
 	}
+
 	// Handle all integer, float and complex via return 0.
 	if intTypeRegex.MatchString(in) || floatTypeRegex.MatchString(in) || complexTypeRegex.MatchString(in) {
 		return "0"
