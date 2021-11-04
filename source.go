@@ -269,6 +269,11 @@ func formatExpr(t ast.Expr) string {
 		return "..." + formatExpr(v.Elt)
 	case *ast.ArrayType:
 		return "[]" + formatExpr(v.Elt)
+	case *ast.MapType:
+		return fmt.Sprintf("map[%s]%s", formatExpr(v.Key), formatExpr(v.Value))
+	case *ast.InterfaceType:
+		// FIXME: it's not correct for all interfaces.
+		return "interface{}"
 	default:
 		log.Fatalf("not handled type %+#v", v)
 		return ""
